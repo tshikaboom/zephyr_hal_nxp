@@ -9,7 +9,7 @@ mcux_set_variable(device MIMX8MN6)
 mcux_set_variable(device_root devices)
 mcux_set_variable(soc_series i.MX8MN)
 mcux_set_variable(soc_periph periph)
-mcux_set_variable(core_id_suffix_name "_cm7")
-mcux_set_variable(multicore_foldername .)
+
+include(${SdkRootDirPath}/devices/i.MX/${soc_series}/${device}/${core_id}/variable.cmake)
 
 #### Source record

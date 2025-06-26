@@ -211,6 +211,7 @@
 /*!
  * @brief clock root source
  */
+// usb clock root source here? i dunno?
 #define CLOCK_ROOT_SOURCE                                                                                              \
     {                                                                                                                  \
         {kCLOCK_Osc24MClk,    kCLOCK_SysPll2Div5Clk, kCLOCK_SysPll2Div4Clk, kCLOCK_SysPll1Div3Clk, kCLOCK_SysPll1Clk,  \
@@ -474,6 +475,8 @@ typedef enum _clock_ip_name
     kCLOCK_Uart3 = CCM_TUPLE(75U, 96U), /*!< UART3 Clock Gate.*/
     kCLOCK_Uart4 = CCM_TUPLE(76U, 97U), /*!< UART4 Clock Gate.*/
 
+// probably add some usb reference here?
+
     kCLOCK_Usdhc1 = CCM_TUPLE(81U, 88U),  /*!< USDHC1 Clock Gate.*/
     kCLOCK_Usdhc2 = CCM_TUPLE(82U, 89U),  /*!< USDHC2 Clock Gate.*/
     kCLOCK_Wdog1  = CCM_TUPLE(83U, 114U), /*!< WDOG1 Clock Gate.*/
@@ -547,6 +550,8 @@ typedef enum _clock_root_control
     kCLOCK_RootGpt5 = (uintptr_t)CCM_BASE + offsetof(CCM_Type, ROOT[111].TARGET_ROOT), /*!< GPT5 Clock control name.*/
     kCLOCK_RootGpt6 = (uintptr_t)CCM_BASE + offsetof(CCM_Type, ROOT[112].TARGET_ROOT), /*!< GPT6 Clock control name.*/
 
+// probably add a usb root clock here?
+
     kCLOCK_RootWdog = (uintptr_t)CCM_BASE + offsetof(CCM_Type, ROOT[114].TARGET_ROOT), /*!< WDOG Clock control name.*/
 
     kCLOCK_RootPdm = (uintptr_t)CCM_BASE + offsetof(CCM_Type, ROOT[132].TARGET_ROOT), /*!< PDM Clock control name.*/
@@ -600,6 +605,8 @@ typedef enum _clock_root
     kCLOCK_Gpt6ClkRoot, /*!< GPT6 Clock control name.*/
 
     kCLOCK_WdogClkRoot, /*!< WDOG Clock control name.*/
+
+// add something here?
 
     kCLOCK_PdmClkRoot, /*!< PDM Clock control name.*/
 
@@ -885,6 +892,8 @@ typedef enum _clock_pll_gate
         (uintptr_t)CCM_BASE + offsetof(CCM_Type, PLL_CTRL[33].PLL_CTRL), /*!< SYSTEM PLL2 Div20 Gate.*/
 
     kCLOCK_SysPll3Gate = (uintptr_t)CCM_BASE + offsetof(CCM_Type, PLL_CTRL[34].PLL_CTRL), /*!< SYSTEM PLL3 Gate.*/
+
+// add usb here? maybe?
 
     kCLOCK_AudioPll1Gate = (uintptr_t)CCM_BASE + offsetof(CCM_Type, PLL_CTRL[35].PLL_CTRL), /*!< AUDIO PLL1 Gate.*/
     kCLOCK_AudioPll2Gate = (uintptr_t)CCM_BASE + offsetof(CCM_Type, PLL_CTRL[36].PLL_CTRL), /*!< AUDIO PLL2 Gate.*/
