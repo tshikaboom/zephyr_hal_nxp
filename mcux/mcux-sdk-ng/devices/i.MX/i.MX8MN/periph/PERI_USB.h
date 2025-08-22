@@ -200,6 +200,8 @@ typedef struct {
   __IO uint32_t ENDPTCTRL[USB_ENDPTCTRL_COUNT];    /**< Endpoint Control0..Endpoint Control 7, array offset: 0x1C0, array step: 0x4 */
 } USB_Type;
 
+#define USBHS_Type USB_Type
+
 /* ----------------------------------------------------------------------------
    -- USB Register Masks
    ---------------------------------------------------------------------------- */
