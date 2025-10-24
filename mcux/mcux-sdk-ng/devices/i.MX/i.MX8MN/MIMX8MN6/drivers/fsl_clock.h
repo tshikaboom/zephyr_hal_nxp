@@ -338,6 +338,15 @@
             {                                                                                                          \
                 kCLOCK_Osc24MClk,  kCLOCK_SysPll2Div10Clk, kCLOCK_AudioPll1Clk, kCLOCK_SysPll1Clk, kCLOCK_SysPll2Clk,  \
                 kCLOCK_SysPll3Clk, kCLOCK_ExtClk3,         kCLOCK_AudioPll2Clk}, /* PDM Clock ROOT */                  \
+            {                                                                                                          \
+                kCLOCK_Osc24MClk,  kCLOCK_SysPll2Div2Clk, kCLOCK_SysPll1Clk, kCLOCK_SysPll2Div10Clk,                   \
+                kCLOCK_SysPll2Div5Clk, kCLOCK_ExtClk2, kCLOCK_ExtClk4, kCLOCK_AudioPll2Clk}, /* USB Clock ROOT */      \
+            {                                                                                                          \
+                kCLOCK_Osc24MClk,  kCLOCK_SysPll1Div8Clk, kCLOCK_SysPll1Div20Clk, kCLOCK_SysPll2Div10Clk,              \
+                kCLOCK_SysPll2Div5Clk, kCLOCK_ExtClk2, kCLOCK_ExtClk3, kCLOCK_AudioPll2Clk}, /* USB CORE Clock ROOT */ \
+            {                                                                                                          \
+                kCLOCK_Osc24MClk,  kCLOCK_SysPll1Div8Clk, kCLOCK_SysPll1Div20Clk, kCLOCK_SysPll2Div10Clk,              \
+                kCLOCK_SysPll2Div5Clk, kCLOCK_ExtClk2, kCLOCK_ExtClk3, kCLOCK_AudioPll2Clk}, /* USB PHY Clock ROOT */  \
     }
 
 #define CLOCK_ROOT_CONTROL_TUPLE                                                                                  \
@@ -348,7 +357,8 @@
             kCLOCK_RootI2c4, kCLOCK_RootUart1, kCLOCK_RootUart2, kCLOCK_RootUart3, kCLOCK_RootUart4,              \
             kCLOCK_RootEcspi1, kCLOCK_RootEcspi2, kCLOCK_RootEcspi3, kCLOCK_RootPwm1, kCLOCK_RootPwm2,            \
             kCLOCK_RootPwm3, kCLOCK_RootPwm4, kCLOCK_RootGpt1, kCLOCK_RootGpt2, kCLOCK_RootGpt3, kCLOCK_RootGpt4, \
-            kCLOCK_RootGpt5, kCLOCK_RootGpt6, kCLOCK_RootWdog, kCLOCK_RootPdm,                                    \
+            kCLOCK_RootGpt5, kCLOCK_RootGpt6, kCLOCK_RootWdog, kCLOCK_RootPdm, kCLOCK_RootUsb,                    \
+            kCLOCK_RootUsbCoreRef, kCLOCK_UsbPhyRef,                                                              \
     }
 
 /*! @brief Clock name used to get clock frequency. */
@@ -475,7 +485,9 @@ typedef enum _clock_ip_name
     kCLOCK_Uart3 = CCM_TUPLE(75U, 96U), /*!< UART3 Clock Gate.*/
     kCLOCK_Uart4 = CCM_TUPLE(76U, 97U), /*!< UART4 Clock Gate.*/
 
-// probably add some usb reference here?
+    kCLOCK_Usb        = CCM_TUPLE(77U, 23U), /*!< USB_BUS Clock Gate.*/
+    kCLOCK_UsbCoreRef = CCM_TUPLE(77U, 98U), /*!< USB_CORE_REF Clock Gate.*/
+    kCLOCK_UsbPhyRef  = CCM_TUPLE(77U, 99U), /*!< USB_PHY_REF Clock Gate.*/
 
     kCLOCK_Usdhc1 = CCM_TUPLE(81U, 88U),  /*!< USDHC1 Clock Gate.*/
     kCLOCK_Usdhc2 = CCM_TUPLE(82U, 89U),  /*!< USDHC2 Clock Gate.*/
@@ -550,12 +562,13 @@ typedef enum _clock_root_control
     kCLOCK_RootGpt5 = (uintptr_t)CCM_BASE + offsetof(CCM_Type, ROOT[111].TARGET_ROOT), /*!< GPT5 Clock control name.*/
     kCLOCK_RootGpt6 = (uintptr_t)CCM_BASE + offsetof(CCM_Type, ROOT[112].TARGET_ROOT), /*!< GPT6 Clock control name.*/
 
-// probably add a usb root clock here?
-
     kCLOCK_RootWdog = (uintptr_t)CCM_BASE + offsetof(CCM_Type, ROOT[114].TARGET_ROOT), /*!< WDOG Clock control name.*/
 
     kCLOCK_RootPdm = (uintptr_t)CCM_BASE + offsetof(CCM_Type, ROOT[132].TARGET_ROOT), /*!< PDM Clock control name.*/
 
+    kCLOCK_RootUsb = (uintptr_t)CCM_BASE + offsetof(CCM_Type, ROOT[23].TARGET_ROOT), /*!< USB_BUS Clock control name.*/
+    kCLOCK_RootUsbCoreRef = (uintptr_t)CCM_BASE + offsetof(CCM_Type, ROOT[98].TARGET_ROOT), /*!< USB_CORE_REF Clock control name.*/
+    kCLOCK_RootUsbPhyRef = (uintptr_t)CCM_BASE + offsetof(CCM_Type, ROOT[99].TARGET_ROOT), /*!< USB_CORE_REF Clock control name.*/
 } clock_root_control_t;
 
 /*! @brief ccm clock root index used to get clock frequency. */
@@ -606,10 +619,11 @@ typedef enum _clock_root
 
     kCLOCK_WdogClkRoot, /*!< WDOG Clock control name.*/
 
-// add something here?
-
     kCLOCK_PdmClkRoot, /*!< PDM Clock control name.*/
 
+    kCLOCK_UsbClkRoot, /*!< USB Clock control name.*/
+    kCLOCK_UsbCoreRefClkRoot, /*!< USB_CORE_REF Clock control name.*/
+    kCLOCK_UsbPhyRefClkRoot, /*!< USB_PHY_REF Clock control name.*/
 } clock_root_t;
 
 /*! @brief Root clock select enumeration for ARM Cortex-M7 core. */
@@ -845,6 +859,45 @@ typedef enum _clock_rootmux_noc_clk_sel
     kCLOCK_NocRootmuxAudioPll2   = 7U, /*!< NOC Clock from AUDIO PLL2.*/
 
 } clock_rootmux_noc_clk_sel_t;
+
+/*! @brief Root clock select enumeration for USB CLK. */
+typedef enum _clock_rootmux_usb_clk_sel
+{
+    kCLOCK_UsbRootmuxOsc24M       = 0U, /*!< USB Clock from OSC 24M.*/
+    kCLOCK_UsbRootmuxSysPll2Div2  = 1U, /*!< USB Clock from SYSTEM PLL2 divided by 2.*/
+    kCLOCK_UsbRootmuxSysPll1      = 2U, /*!< USB Clock from SYSTEM PLL1.*/
+    kCLOCK_UsbRootmuxSysPll2Div10 = 3U, /*!< USB Clock from SYSTEM PLL2 divided by 10.*/
+    kCLOCK_UsbRootmuxSysPll2Div5  = 4U, /*!< USB Clock from SYSTEM PLL2 divided by 5.*/
+    kCLOCK_UsbRootmuxExtClk2      = 5U, /*!< USB Clock from External Clock2.*/
+    kCLOCK_UsbRootmuxExtClk4      = 6U, /*!< USB Clock from External Clock4.*/
+    kCLOCK_UsbRootmuxAudioPll2    = 7U, /*!< USB Clock from AUDIO PLL2.*/
+} clock_rootmux_usb_clk_sel_t;
+
+/*! @brief Root clock select enumeration for USB CLK. */
+typedef enum _clock_rootmux_usb_core_ref_clk_sel
+{
+    kCLOCK_UsbCoreRefRootmuxOsc24M       = 0U, /*!< USB CORE Clock from OSC 24M.*/
+    kCLOCK_UsbCoreRefRootmuxSysPll1Div8  = 1U, /*!< USB CORE Clock from SYSTEM PLL1 divided by 8.*/
+    kCLOCK_UsbCoreRefRootmuxSysPll1Div20 = 2U, /*!< USB CORE Clock from SYSTEM PLL1 divided by 20.*/
+    kCLOCK_UsbCoreRefRootmuxSysPll2Div10 = 3U, /*!< USB CORE Clock from SYSTEM PLL2 divided by 10.*/
+    kCLOCK_UsbCoreRefRootmuxSysPll2Div5  = 4U, /*!< USB CORE Clock from SYSTEM PLL2 divided by 5.*/
+    kCLOCK_UsbCoreRefRootmuxExtClk2      = 5U, /*!< USB CORE Clock from External Clock2.*/
+    kCLOCK_UsbCoreRefRootmuxExtClk3      = 6U, /*!< USB CORE Clock from External Clock3.*/
+    kCLOCK_UsbCoreRefRootmuxAudioPll2    = 7U, /*!< USB CORE Clock from AUDIO PLL2.*/
+} clock_rootmux_usb_core_ref_clk_sel_t;
+
+/*! @brief Root clock select enumeration for USB CLK. */
+typedef enum _clock_rootmux_usb_phy_ref_clk_sel
+{
+    kCLOCK_UsbPhyRefRootmuxOsc24M       = 0U, /*!< USB PHY Clock from OSC 24M.*/
+    kCLOCK_UsbPhyRefRootmuxSysPll1Div8  = 1U, /*!< USB PHY Clock from SYSTEM PLL1 divided by 8.*/
+    kCLOCK_UsbPhyRefRootmuxSysPll1Div20 = 2U, /*!< USB PHY Clock from SYSTEM PLL1 divided by 20.*/
+    kCLOCK_UsbPhyRefRootmuxSysPll2Div10 = 3U, /*!< USB PHY Clock from SYSTEM PLL2 divided by 10.*/
+    kCLOCK_UsbPhyRefRootmuxSysPll2Div5  = 4U, /*!< USB PHY Clock from SYSTEM PLL2 divided by 5.*/
+    kCLOCK_UsbPhyRefRootmuxExtClk2      = 5U, /*!< USB PHY Clock from External Clock2.*/
+    kCLOCK_UsbPhyRefRootmuxExtClk3      = 6U, /*!< USB PHY Clock from External Clock3.*/
+    kCLOCK_UsbPhyRefRootmuxAudioPll2    = 7U, /*!< USB PHY Clock from AUDIO PLL2.*/
+} clock_rootmux_usb_phy_ref_clk_sel_t;
 
 /*! @brief CCM PLL gate control. */
 typedef enum _clock_pll_gate
