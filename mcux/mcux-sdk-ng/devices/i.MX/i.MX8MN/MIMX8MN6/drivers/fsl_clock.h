@@ -165,6 +165,8 @@
         kCLOCK_Asrc \
     }
 
+// would be of good taste to define USB_CLOCKS here, even if it's not really used
+
 /*!
  * @brief CCM reg macros to extract corresponding registers bit field.
  */
@@ -873,7 +875,7 @@ typedef enum _clock_rootmux_usb_clk_sel
     kCLOCK_UsbRootmuxAudioPll2    = 7U, /*!< USB Clock from AUDIO PLL2.*/
 } clock_rootmux_usb_clk_sel_t;
 
-/*! @brief Root clock select enumeration for USB CLK. */
+/*! @brief Root clock select enumeration for USB CORE CLK. */
 typedef enum _clock_rootmux_usb_core_ref_clk_sel
 {
     kCLOCK_UsbCoreRefRootmuxOsc24M       = 0U, /*!< USB CORE Clock from OSC 24M.*/
@@ -886,7 +888,7 @@ typedef enum _clock_rootmux_usb_core_ref_clk_sel
     kCLOCK_UsbCoreRefRootmuxAudioPll2    = 7U, /*!< USB CORE Clock from AUDIO PLL2.*/
 } clock_rootmux_usb_core_ref_clk_sel_t;
 
-/*! @brief Root clock select enumeration for USB CLK. */
+/*! @brief Root clock select enumeration for USB PHY CLK. */
 typedef enum _clock_rootmux_usb_phy_ref_clk_sel
 {
     kCLOCK_UsbPhyRefRootmuxOsc24M       = 0U, /*!< USB PHY Clock from OSC 24M.*/
